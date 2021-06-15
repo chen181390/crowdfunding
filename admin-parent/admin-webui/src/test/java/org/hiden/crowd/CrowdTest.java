@@ -1,7 +1,9 @@
 package org.hiden.crowd;
 
 import org.hiden.crowd.entity.Admin;
+import org.hiden.crowd.entity.Role;
 import org.hiden.crowd.mapper.AdminMapper;
+import org.hiden.crowd.mapper.RoleMapper;
 import org.hiden.crowd.service.api.AdminService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +26,8 @@ public class CrowdTest {
     private AdminMapper adminMapper;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Test
     public void testTx() {
@@ -49,5 +53,12 @@ public class CrowdTest {
     @Test
     public void testConn() throws SQLException {
         System.out.println(dataSource.getConnection());
+    }
+
+    @Test
+    public void testAddRole() {
+        for(int i = 0; i < 235; i++) {
+            roleMapper.insert(new Role(null, "role"+ i));
+        }
     }
 }

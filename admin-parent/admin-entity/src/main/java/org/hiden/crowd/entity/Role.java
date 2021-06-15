@@ -20,4 +20,9 @@ public class Role {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+
+    public Role(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
