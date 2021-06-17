@@ -6,37 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script type="text/javascript">
-    $(() => {
-        $("#showAddModalBtn").click(() => $("#addModal").modal("show"));
-        $("#saveRoleBtn").click(() => {
-            let roleName = $.trim($("#addModal [name=roleName]").val());
-            $.ajax({
-                url: "role/save.json",
-                type: "post",
-                data: {
-                    name: roleName
-                },
-                dataType: "json",
-                success: response => {
-                    let result = response.result;
-                    if (result === "SUCCESS") {
-                        layer.msg("操作成功!");
-                        window.pageNum = 999999;
-                        generatePage();
-                    } else {
-                        layer.msg("操作失败!" + response.message);
-                    }
-                },
-                error: response => {
-                    layer.msg(response.status + " " + response.statusText);
-                }
-            });
-            $("#addModal").modal("hide");
-            $("#addModal [name=roleName]").val("");
-        });
-    });
-</script>
 <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -48,7 +17,7 @@
             <div class="modal-body">
                 <form class="form-signin" role="form">
                     <div class="form-group has-success has-feedback">
-                        <input type="text" class="form-control" name="roleName" id="inputSuccess4"
+                        <input type="text" class="form-control" name="roleName"
                                placeholder="请输入新增角色名称" autofocus>
                     </div>
                 </form>

@@ -29,6 +29,7 @@ function getPageInfoRemote() {
 }
 
 function fillTableBody(pageInfo) {
+    $("#summaryBox").prop("checked", false);
     $("#rolePageBody").empty();
     $("#Pagination").empty();
     if (!pageInfo || !pageInfo || pageInfo.list.length === 0) {
@@ -41,11 +42,11 @@ function fillTableBody(pageInfo) {
         let name = role.name;
 
         let numberTd = `<td>${(id)}</td>`;
-        let checkboxTd = "<td><input type='checkbox'></td>";
+        let checkboxTd = `<td><input type='checkbox' class='itemBox' rolename=${name} id=${id}></td>`;
         let roleNameTd = `<td>${name}</td>`;
         let checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-check'></i></button>";
-        let pencilBtn = "<button type='button' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
-        let removeBtn = "<button type='button' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
+        let pencilBtn = `<button type='button' class='btn btn-primary btn-xs pencilBtn' rolename=${name} roleid=${id}><i class='glyphicon glyphicon-pencil'></i></button>`;
+        let removeBtn = `<button type='button' class='btn btn-danger btn-xs removeBtn' rolename=${name} id=${id}><i class='glyphicon glyphicon-remove'></i></button>`;
         let buttonTd = `<td>${checkBtn} ${pencilBtn} ${removeBtn}</td>`;
         let tr = "<tr>" + numberTd + checkboxTd + roleNameTd + buttonTd + "</tr>";
         $("#rolePageBody").append(tr);
@@ -71,4 +72,16 @@ function paginationCallBack(pageIndex, jQuery) {
     window.pageNum = pageIndex + 1;
     generatePage();
     return false;
+}
+
+function showConfirmModal(roleArray) {
+    $("#roleNameDiv").empty();
+    $("#confirmModal").modal("show");
+    window.roleIdArray = [];
+    for(let i = 0; i < roleArray.length; i++) {
+        let role = roleArray[i];
+        let roleName = role.roleName;
+        $("#roleNameDiv").append(roleName+"<br/>");
+        window.roleIdArray.push(role.roleId);
+    }
 }

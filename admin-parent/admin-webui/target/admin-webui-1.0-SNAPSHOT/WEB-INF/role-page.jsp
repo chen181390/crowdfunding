@@ -4,7 +4,7 @@
 <%@include file="/WEB-INF/include-head.jsp" %>
 <link rel="stylesheet" href="css/pagination.css"/>
 <script type="text/javascript" src="jquery/jquery.pagination.js"></script>
-<script type="text/javascript" src="js/my-role.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/role.js" charset="UTF-8"></script>
 <script type="text/javascript" charset="UTF-8">
     $(() => {
         window.pageNum = 1;
@@ -16,6 +16,116 @@
             window.keyword = $("#keywordInput").val();
             window.pageNum = 1;
             generatePage();
+        });
+
+        $("#showAddModalBtn").click(() => $("#addModal").modal("show"));
+
+        $("#saveRoleBtn").click(() => {
+            let roleName = $.trim($("#addModal [name=roleName]").val());
+            $.ajax({
+                url: "role/save.json",
+                type: "post",
+                data: {
+                    name: roleName
+                },
+                dataType: "json",
+                success: response => {
+                    let result = response.result;
+                    if (result === "SUCCESS") {
+                        layer.msg("操作成功!");
+                        window.pageNum = 999999;
+                        generatePage();
+                    } else {
+                        layer.msg("操作失败!" + response.message);
+                    }
+                },
+                error: response => {
+                    layer.msg(response.status + " " + response.statusText);
+                }
+            });
+            $("#addModal").modal("hide");
+            $("#addModal [name=roleName]").val("");
+        });
+
+        $("#rolePageBody").on('click', ".pencilBtn", function () {
+            let thisJquery = $(this);
+            let roleName = thisJquery.attr("rolename");
+            window.roleId = thisJquery.attr("roleid");
+            $("#editModal [name=roleName]").val(roleName);
+            $("#editModal").modal("show");
+        });
+
+        $("#updateRoleBtn").click(function () {
+            let roleName =  $("#editModal [name=roleName]").val();
+            $.ajax({
+                url: "role/update.json",
+                type: "post",
+                data: {
+                    id: window.roleId,
+                    name: roleName
+                },
+                dataType: "json",
+                success: function (response) {
+                    layer.msg("操作成功");
+                    generatePage();
+                },
+                error: function (response) {
+                    layer.msg(response.status + " " + response.statusText);
+                }
+            });
+            $("#editModal").modal("hide");
+        });
+
+        $("#removeRoleBtn").click(function () {
+           $.ajax({
+               url: "role/remove/by/role/id/array.json",
+               type: "post",
+               data: JSON.stringify(window.roleIdArray),
+               contentType: "application/json;charset=UTF-8",
+               dataType: "json",
+               success: function (response) {
+                   layer.msg("操作成功");
+                   generatePage();
+               },
+               error: function (response) {
+                   layer.msg(response.status + " " + response.statusText);
+               }
+           });
+           $("#confirmModal").modal("hide");
+        });
+
+        $("#rolePageBody").on("click", ".removeBtn", function () {
+            let roleArray = [{
+                roleId: this.id,
+                roleName: $(this).attr("rolename")
+            }];
+            showConfirmModal(roleArray);
+        });
+
+        $("#summaryBox").click(function () {
+            $(".itemBox").prop("checked", this.checked);
+        });
+
+        $('#rolePageBody').on("click", ".itemBox", function () {
+            let checkedCount = $(".itemBox:checked").length;
+            let allCount =  $(".itemBox").length;
+            $("#summaryBox").prop("checked", checkedCount === allCount);
+        });
+
+        $("#batchRemoveBtn").click(function () {
+            let roleArray = [];
+            $(".itemBox:checked").each(function () {
+                let role = {
+                    roleId: this.id,
+                    roleName: $(this).attr("roleName")
+                }
+                roleArray.push(role);
+            });
+            if (roleArray.length === 0) {
+                layer.msg("请至少选择一个执行删除");
+                return;
+            }
+            showConfirmModal(roleArray);
         });
     });
 </script>
@@ -43,7 +153,7 @@
                             查询
                         </button>
                     </form>
-                    <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
+                    <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" id="batchRemoveBtn"><i
                             class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
                     <button type="button" class="btn btn-primary" style="float:right;" id="showAddModalBtn"><i
@@ -57,7 +167,7 @@
                             <thead>
                             <tr>
                                 <th width="30">#</th>
-                                <th width="30"><input type="checkbox"></th>
+                                <th width="30"><input type="checkbox" id="summaryBox"></th>
                                 <th>名称</th>
                                 <th width="100">操作</th>
                             </tr>
@@ -93,7 +203,9 @@
         </div>
     </div>
 </div>
-<%@include file="/WEB-INF/modal-role-add.jsp" %>
+<%@include file="/WEB-INF/modal-role-add.jsp"%>
+<%@include file="/WEB-INF/modal-role-edit.jsp"%>
+<%@include file="/WEB-INF/modal-role-confirm.jsp"%>
 </body>
 
 </html>

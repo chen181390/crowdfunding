@@ -3,6 +3,7 @@ package org.hiden.crowd.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.hiden.crowd.entity.Role;
+import org.hiden.crowd.entity.RoleExample;
 import org.hiden.crowd.mapper.RoleMapper;
 import org.hiden.crowd.service.api.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,18 @@ public class RoleServiceImpl implements RoleService {
         roleMapper.insertSelective(role);
     }
 
+    @Override
+    public void updateRole(Role role) {
+        roleMapper.updateByPrimaryKeySelective(role);
+    }
+
+    @Override
+    public void removeRole(List<Integer> roleIdList) {
+        RoleExample example = new RoleExample();
+        RoleExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(roleIdList);
+        roleMapper.deleteByExample(example);
+
+    }
 
 }

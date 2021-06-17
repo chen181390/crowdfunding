@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+
+<div class="modal fade" tabindex="-1" role="dialog" id="editModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,13 +18,12 @@
             <div class="modal-body">
                 <form class="form-signin" role="form">
                     <div class="form-group has-success has-feedback">
-                        <input type="text" class="form-control" name="roleName"
-                               placeholder="请输入新增角色名称" autofocus>
+                        <input type="text" class="form-control" name="roleName"  autofocus>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveRoleBtn">保存</button>
+                <button type="button" class="btn btn-success" id="updateRoleBtn">修改</button>
             </div>
         </div>
     </div>
