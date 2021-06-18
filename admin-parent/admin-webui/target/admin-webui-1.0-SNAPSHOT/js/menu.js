@@ -1,4 +1,4 @@
-function generateTree() {
+﻿function generateTree() {
     $("#treeDemo").empty();
     $.ajax({
         url: "menu/get/whole/tree.json",
@@ -40,9 +40,9 @@ function myAddHoverDom(treeId, treeNode) {
     let btnGroupId = treeNode.tId + "_btnGroup";
     if ($("#" + btnGroupId).length > 0) return;
 
-    let addBtn = `<a id="${treeNode.id}" class="addBtn btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg"></i></a>`;
-    let editBtn = `<a id="${treeNode.id}" class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg"></i></a>`;
-    let removeBtn = `<a id="${treeNode.id}" class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>`;
+    let addBtn = `<a nodeId="${treeNode.id}" class="addBtn btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg"></i></a>`;
+    let editBtn = `<a nodeId="${treeNode.id}" class="editBtn btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg"></i></a>`;
+    let removeBtn = `<a nodeId="${treeNode.id}" class="removeBtn btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>`;
     let btnHTML;
     switch (treeNode.level) {
         case 0:

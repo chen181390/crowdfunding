@@ -4,21 +4,20 @@ import org.hiden.crowd.entity.Menu;
 import org.hiden.crowd.service.api.MenuService;
 import org.hiden.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/menu")
 public class MenuHandler {
     @Autowired
     private MenuService menuService;
 
-    @ResponseBody
     @RequestMapping("/get/whole/tree.json")
     public ResultEntity<Menu> getWholeTreeNew() {
         List<Menu> menuList = menuService.getAll();
@@ -39,5 +38,23 @@ public class MenuHandler {
             father.getChildren().add(menu);
         }
         return ResultEntity.successWithData(root);
+    }
+
+    @RequestMapping("/save.json")
+    public ResultEntity<String> saveMenu(Menu menu) {
+        menuService.saveMenu(menu);
+        return ResultEntity.successWithoutData();
+    }
+
+    @RequestMapping("/update.json")
+    public ResultEntity<String> updateMenu(Menu menu) {
+        menuService.updateMenu(menu);
+        return ResultEntity.successWithoutData();
+    }
+
+    @RequestMapping("/remove.json")
+    public ResultEntity<String> removeMenu(Integer id) {
+        menuService.removeMenu(id);
+        return ResultEntity.successWithoutData();
     }
 }
