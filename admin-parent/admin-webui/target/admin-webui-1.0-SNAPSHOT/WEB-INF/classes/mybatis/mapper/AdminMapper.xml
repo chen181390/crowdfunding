@@ -101,6 +101,11 @@
         from t_admin
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <delete id="deleteAdminRoleRelationShip">
+        delete
+        from inner_admin_role
+        where admin_id = #{adminId}
+    </delete>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from t_admin
@@ -112,6 +117,13 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
+    <insert id="insertAdminRoleRelationShip">
+        insert into inner_admin_role (admin_id, role_id)
+        values
+        <foreach collection="assignedRoleList" item="assignedRoleId" separator=",">
+            (#{adminId}, #{assignedRoleId})
+        </foreach>
+    </insert>
     <insert id="insert" parameterType="org.hiden.crowd.entity.Admin">
         insert into t_admin (id, login_acct, user_pswd,
                              user_name, email, create_time)

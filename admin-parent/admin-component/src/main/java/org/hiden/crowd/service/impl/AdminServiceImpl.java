@@ -95,4 +95,11 @@ public class AdminServiceImpl implements AdminService {
            throw new RuntimeException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
         }
     }
+
+    @Override
+    public void saveAdminRoleRelationShip(Integer adminId, List<Integer> assignedRoleList) {
+        adminMapper.deleteAdminRoleRelationShip(adminId);
+        if (assignedRoleList == null || assignedRoleList.size() == 0) return;
+        adminMapper.insertAdminRoleRelationShip(adminId, assignedRoleList);
+    }
 }

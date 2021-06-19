@@ -1,6 +1,7 @@
 package org.hiden.crowd.service.api;
 
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.hiden.crowd.entity.Admin;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface AdminService {
     Admin getAdminById(Integer adminId);
 
     void update(Admin admin);
+
+    void saveAdminRoleRelationShip(Integer adminId, List<Integer> assignedRoleList);
 }

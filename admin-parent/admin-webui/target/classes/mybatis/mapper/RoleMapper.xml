@@ -69,6 +69,16 @@
         id
         , name
     </sql>
+    <select id="selectAssignedRole" resultMap="BaseResultMap">
+        select id, name
+        from t_role
+        where id in (select role_id from inner_admin_role where admin_id = #{adminId})
+    </select>
+    <select id="selectUnAssignedRole" resultMap="BaseResultMap">
+        select id, name
+        from t_role
+        where id not in (select role_id from inner_admin_role where admin_id = #{adminId})
+    </select>
     <select id="selectByKeyword" resultMap="BaseResultMap">
         select id, name
         from t_role
@@ -106,6 +116,9 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
+<!--    <insert id="insert" parameterType="org.hiden.crowd.entity.Role">-->
+<!--        insert into inner_admin-->
+<!--    </insert>-->
     <insert id="insert" parameterType="org.hiden.crowd.entity.Role">
         insert into t_role (id, name)
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=CHAR})
