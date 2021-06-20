@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.hiden.crowd.mapper.MenuMapper">
-  <resultMap id="BaseResultMap" type="org.hiden.crowd.org.hiden.crowd.entity.Menu">
+  <resultMap id="BaseResultMap" type="org.hiden.crowd.entity.Menu">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, pid, name, url, icon
   </sql>
-  <select id="selectByExample" parameterType="org.hiden.crowd.org.hiden.crowd.entity.MenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.hiden.crowd.entity.MenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,19 +93,19 @@
     delete from t_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.hiden.crowd.org.hiden.crowd.entity.MenuExample">
+  <delete id="deleteByExample" parameterType="org.hiden.crowd.entity.MenuExample">
     delete from t_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.hiden.crowd.org.hiden.crowd.entity.Menu">
+  <insert id="insert" parameterType="org.hiden.crowd.entity.Menu">
     insert into t_menu (id, pid, name, 
       url, icon)
     values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.hiden.crowd.org.hiden.crowd.entity.Menu">
+  <insert id="insertSelective" parameterType="org.hiden.crowd.entity.Menu">
     insert into t_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -142,7 +142,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.hiden.crowd.org.hiden.crowd.entity.MenuExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.hiden.crowd.entity.MenuExample" resultType="java.lang.Long">
     select count(*) from t_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -182,7 +182,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.hiden.crowd.org.hiden.crowd.entity.Menu">
+  <update id="updateByPrimaryKeySelective" parameterType="org.hiden.crowd.entity.Menu">
     update t_menu
     <set>
       <if test="pid != null">
@@ -200,7 +200,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.hiden.crowd.org.hiden.crowd.entity.Menu">
+  <update id="updateByPrimaryKey" parameterType="org.hiden.crowd.entity.Menu">
     update t_menu
     set pid = #{pid,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},

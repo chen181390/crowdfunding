@@ -8,7 +8,7 @@
 <!--    </settings>-->
 
 <!--    <typeAliases>-->
-<!--        <package name="org.hiden.crowd.entity"/>-->
+<!--        <package name="org.hiden.crowd.org.hiden.crowd.entity"/>-->
 <!--    </typeAliases>-->
 
 <!--    <mappers>-->

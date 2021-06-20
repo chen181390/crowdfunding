@@ -17,7 +17,7 @@
           <element id="archive" name="admin-component-1.0-SNAPSHOT.jar">
             <element id="module-output" name="admin-component" />
           </element>
-          <element id="archive" name="admin-entity-1.0-SNAPSHOT.jar">
+          <element id="archive" name="admin-org.hiden.crowd.entity-1.0-SNAPSHOT.jar">
             <element id="module-output" name="admin-entity" />
           </element>
           <element id="archive" name="common-util-1.0-SNAPSHOT.jar">
