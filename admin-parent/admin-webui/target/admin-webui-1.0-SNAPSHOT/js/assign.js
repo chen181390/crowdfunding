@@ -1,4 +1,4 @@
-function initList(data) {
+﻿function initList(data) {
     let unAssignedRoleList = data.unAssignedRoleList;
     let assignedRoleList = data.assignedRoleList;
     let unAssignedRoleStr = "";
