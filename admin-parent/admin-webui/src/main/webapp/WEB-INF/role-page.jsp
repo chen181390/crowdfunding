@@ -4,6 +4,8 @@
 <%@include file="/WEB-INF/include-head.jsp" %>
 <link rel="stylesheet" href="css/pagination.css"/>
 <script type="text/javascript" src="jquery/jquery.pagination.js"></script>
+<link rel="stylesheet" type="text/css" href="ztree/zTreeStyle.css"/>
+<script type="text/javascript" src="ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="js/role.js" charset="UTF-8"></script>
 <script type="text/javascript" charset="UTF-8">
     $(() => {
@@ -96,7 +98,7 @@
 
         $("#rolePageBody").on("click", ".removeBtn", function () {
             let roleArray = [{
-                roleId: this.id,
+                roleId: $(this).attr("roleid"),
                 roleName: $(this).attr("rolename")
             }];
             showConfirmModal(roleArray);
@@ -126,6 +128,42 @@
                 return;
             }
             showConfirmModal(roleArray);
+        });
+        
+        $("#rolePageBody").on("click", ".checkBtn", function () {
+           $("#assignAuthModal").modal("show");
+           window.roleId = $(this).attr("roleid");
+           fillAuthTree();
+        });
+
+        $("#assignAuthBtn").click(function () {
+            let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+            let checkedNodes = zTreeObj.getCheckedNodes();
+            let authIdArray = checkedNodes.map(function (val) {
+                return val.id;
+            });
+            $.ajax({
+               url: "assign/do/auth/assign.html",
+                type: "post",
+                dataType: "json",
+                data: {
+                   roleId: window.roleId,
+                   authIdArray: authIdArray
+                },
+                success: function (response) {
+                   if (response.result !== "SUCCESS") {
+                       layer.msg(response.message);
+                       return;
+                   }
+                   layer.msg("操作成功！");
+                   $("#assignAuthModal").modal("close");
+                   fillAuthTree();
+                },
+                error: function (response) {
+                   layer.msg(response.status + " " + response.statusText);
+                   console.log(response);
+                }
+            });
         });
     });
 </script>
@@ -206,6 +244,7 @@
 <%@include file="/WEB-INF/modal-role-add.jsp"%>
 <%@include file="/WEB-INF/modal-role-edit.jsp"%>
 <%@include file="/WEB-INF/modal-role-confirm.jsp"%>
+<%@include file="/WEB-INF/modal-role-assign-auth.jsp"%>
 </body>
 
 </html>

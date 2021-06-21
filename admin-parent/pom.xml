@@ -7,7 +7,7 @@
     <modules>
         <module>admin-webui</module>
         <module>admin-component</module>
-        <module>admin-org.hiden.crowd.entity</module>
+        <module>admin-entity</module>
     </modules>
 
     <groupId>org.hiden.crowd</groupId>

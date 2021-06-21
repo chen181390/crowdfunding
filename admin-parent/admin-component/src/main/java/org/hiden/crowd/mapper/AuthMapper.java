@@ -27,4 +27,10 @@ public interface AuthMapper {
     int updateByPrimaryKeySelective(Auth record);
 
     int updateByPrimaryKey(Auth record);
+
+    List<Integer> selectAssignedAuthIdByRoleId(Integer roleId);
+
+    void insertRoleAuthRelationship(@Param("roleId") Integer roleId, @Param("authIdArray") List<Integer> authIdArray);
+
+    void deleteRoleAuthRelationship(Integer roleId);
 }

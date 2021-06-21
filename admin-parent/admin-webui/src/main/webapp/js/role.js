@@ -14,7 +14,6 @@ function getPageInfoRemote() {
         },
         dataType: "json",
         success: response => {
-            console.log(response);
             if (response.result === "FAILED") {
                 layer.msg(response.message);
                 return;
@@ -44,9 +43,9 @@ function fillTableBody(pageInfo) {
         let numberTd = `<td>${(id)}</td>`;
         let checkboxTd = `<td><input type='checkbox' class='itemBox' rolename=${name} id=${id}></td>`;
         let roleNameTd = `<td>${name}</td>`;
-        let checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-check'></i></button>";
+        let checkBtn = `<button type='button' class='btn btn-success btn-xs checkBtn' rolename=${name} roleid=${id}><i class='glyphicon glyphicon-check'></i></button>`;
         let pencilBtn = `<button type='button' class='btn btn-primary btn-xs pencilBtn' rolename=${name} roleid=${id}><i class='glyphicon glyphicon-pencil'></i></button>`;
-        let removeBtn = `<button type='button' class='btn btn-danger btn-xs removeBtn' rolename=${name} id=${id}><i class='glyphicon glyphicon-remove'></i></button>`;
+        let removeBtn = `<button type='button' class='btn btn-danger btn-xs removeBtn' rolename=${name} roleid=${id}><i class='glyphicon glyphicon-remove'></i></button>`;
         let buttonTd = `<td>${checkBtn} ${pencilBtn} ${removeBtn}</td>`;
         let tr = "<tr>" + numberTd + checkboxTd + roleNameTd + buttonTd + "</tr>";
         $("#rolePageBody").append(tr);
@@ -78,10 +77,68 @@ function showConfirmModal(roleArray) {
     $("#roleNameDiv").empty();
     $("#confirmModal").modal("show");
     window.roleIdArray = [];
-    for(let i = 0; i < roleArray.length; i++) {
+    for (let i = 0; i < roleArray.length; i++) {
         let role = roleArray[i];
         let roleName = role.roleName;
-        $("#roleNameDiv").append(roleName+"<br/>");
+        $("#roleNameDiv").append(roleName + "<br/>");
         window.roleIdArray.push(role.roleId);
     }
+}
+
+function fillAuthTree() {
+    let ajaxResult = $.ajax({
+        url: "assign/get/all/auth.json",
+        type: "post",
+        dataType: "json",
+        async: false
+    });
+    if (ajaxResult.statusText !== "success") {
+        layer.msg(ajaxResult.status + " " + ajaxResult.statusText);
+        return;
+    }
+    let responseJSON = ajaxResult.responseJSON;
+    if (responseJSON.result !== "SUCCESS") {
+        layer.msg(responseJSON.message);
+        return;
+    }
+    $("#authTreeDemo").empty();
+    let authList = responseJSON.data;
+    let setting = {
+        data: {
+            simpleData: {
+                enable: true,
+                pIdKey: "categoryId"
+            },
+            key: {
+                name: "title"
+            }
+        },
+        check: {
+            enable: true
+        }
+    };
+    $.fn.zTree.init($("#authTreeDemo"), setting, authList);
+    let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+    zTreeObj.expandAll(true);
+
+    let ajaxResult2 = $.ajax({
+        url: "assign/get/assigned/auth/id/by/role/id..json",
+        type: "post",
+        dataType: "json",
+        data: {
+            roleId: window.roleId
+        },
+        async: false
+    });
+    if (ajaxResult2.statusText !== "success") {
+        layer.msg(ajaxResult2.status + " " + ajaxResult2.statusText);
+        return;
+    }
+    let responseJSON2 = ajaxResult2.responseJSON;
+    let authIdArray = responseJSON2.data;
+    for (let i = 0; i < authIdArray.length; i++) {
+        let treeNode = zTreeObj.getNodeByParam("id", authIdArray[i]);
+        zTreeObj.checkNode(treeNode, true, false);
+    }
+
 }
