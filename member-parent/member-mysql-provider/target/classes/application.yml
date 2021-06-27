@@ -14,7 +14,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:1000/eureka
 mybatis:
-  mapper-locations: classpath*:/mybatis/mapper/*Mapper.xml
+  mapper-locations: classpath:/mybatis/mapper/*Mapper.xml
 logging:
   level:
     org.hiden.crowd.mapper: debug
