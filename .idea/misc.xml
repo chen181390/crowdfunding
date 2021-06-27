@@ -12,6 +12,8 @@
         <option value="$PROJECT_DIR$/common-util/pom.xml" />
         <option value="$PROJECT_DIR$/common-reverse/pom.xml" />
         <option value="$PROJECT_DIR$/admin-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/../member-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/member-parent/pom.xml" />
       </list>
     </option>
   </component>

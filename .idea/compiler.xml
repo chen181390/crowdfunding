@@ -2,15 +2,26 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="admin-webui" />
         <module name="common-util" />
+        <module name="member-mysql-provider" />
+        <module name="member-zuul" />
+        <module name="member-pay-consumer" />
+        <module name="member-project-consumer" />
+        <module name="member-entity" />
+        <module name="member-redis-provider" />
         <module name="admin-entity" />
-        <module name="common-reverse" />
+        <module name="member-authentication-consumer" />
         <module name="admin-component" />
+        <module name="member-eureka" />
+        <module name="member-order-consumer" />
+        <module name="member-api" />
+        <module name="common-reverse" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +31,17 @@
       <module name="admin-webui" target="1.8" />
       <module name="common-reverse" target="1.8" />
       <module name="common-util" target="1.8" />
+      <module name="member-api" target="8" />
+      <module name="member-authentication-consumer" target="8" />
+      <module name="member-entity" target="8" />
+      <module name="member-eureka" target="8" />
+      <module name="member-mysql-provider" target="8" />
+      <module name="member-order-consumer" target="8" />
+      <module name="member-parent" target="8" />
+      <module name="member-pay-consumer" target="8" />
+      <module name="member-project-consumer" target="8" />
+      <module name="member-redis-provider" target="8" />
+      <module name="member-zuul" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
