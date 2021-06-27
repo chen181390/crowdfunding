@@ -1,4 +1,4 @@
-﻿function generateTree() {
+function generateTree() {
     $("#treeDemo").empty();
     $.ajax({
         url: "menu/get/whole/tree.json",

@@ -29,4 +29,10 @@ public class AuthServiceImpl implements AuthService {
         if (authIdArray == null || authIdArray.size() == 0) return;
         authMapper.insertRoleAuthRelationship(roleId, authIdArray);
     }
+
+    @Override
+    public List<String> getAssignedAuthNameByAdminId(Integer adminId) {
+
+        return authMapper.selectAssignedAuthNameByAdminId(adminId);
+    }
 }

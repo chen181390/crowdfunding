@@ -12,6 +12,7 @@ import org.hiden.crowd.service.api.AdminService;
 import org.hiden.crowd.util.CrowdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.RuntimeMBeanException;
@@ -23,12 +24,15 @@ import java.util.Objects;
 public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<Admin> getAll() {
         return adminMapper.selectByExample(new AdminExample());
     }
 
+    @Deprecated
     @Override
     public Admin getAdminByLoginAcct(String loginAcct, String userPswd) {
         AdminExample adminExample = new AdminExample();
@@ -63,7 +67,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void add(Admin admin) {
         String userPwd = admin.getUserPswd();
-        admin.setUserPswd(CrowdUtil.md5(userPwd));
+        admin.setUserPswd(passwordEncoder.encode(userPwd));
         admin.setCreateTime(new Date());
         try {
             adminMapper.insertSelective(admin);
@@ -101,5 +105,14 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.deleteAdminRoleRelationShip(adminId);
         if (assignedRoleList == null || assignedRoleList.size() == 0) return;
         adminMapper.insertAdminRoleRelationShip(adminId, assignedRoleList);
+    }
+
+    @Override
+    public Admin getAdminByLoginAcct(String s) {
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        criteria.andLoginAcctEqualTo(s);
+        List<Admin> adminList = adminMapper.selectByExample(adminExample);
+        return adminList.get(0);
     }
 }

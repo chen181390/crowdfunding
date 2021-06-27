@@ -5,6 +5,7 @@ import org.hiden.crowd.entity.Role;
 import org.hiden.crowd.service.api.RoleService;
 import org.hiden.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class RoleHandler {
     @Autowired
     private RoleService roleSercice;
 
+    @PreAuthorize("hasRole('部长')")
     @ResponseBody
     @RequestMapping("/get/page/info.json")
     public ResultEntity<PageInfo<Role>> getPageInfo(

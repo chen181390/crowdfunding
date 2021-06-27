@@ -45,4 +45,9 @@ public class CrowdExceptionResolver {
     public ModelAndView resolveLoginAcctAlreadyInUseException(LoginAcctAlreadyInUseException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return resolveCommonException("admin-add", exception, request, response);
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView resolveException(Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return resolveCommonException("system-error", exception, request, response);
+    }
 }

@@ -71,6 +71,20 @@
         id
         , name, title, category_id
     </sql>
+    <select id="selectAssignedAuthNameByAdminId" resultType="java.lang.String">
+        SELECT DISTINCT
+            t_auth.name
+        FROM
+            t_auth
+                INNER JOIN
+            inner_role_auth ON t_auth.id = inner_role_auth.auth_id
+                INNER JOIN
+            inner_admin_role ON inner_role_auth.role_id = inner_admin_role.role_id
+        WHERE
+            inner_admin_role.admin_id = #{adminId}
+          AND t_auth.name != ''
+        AND t_auth.name IS NOT NULL
+    </select>
     <select id="selectAssignedAuthIdByRoleId" resultType="java.lang.Integer">
         select auth_id
         from inner_role_auth

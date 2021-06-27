@@ -1,4 +1,4 @@
-﻿// 执行分页，生成页面
+// 执行分页，生成页面
 function generatePage() {
     getPageInfoRemote();
 }
@@ -140,5 +140,4 @@ function fillAuthTree() {
         let treeNode = zTreeObj.getNodeByParam("id", authIdArray[i]);
         zTreeObj.checkNode(treeNode, true, false);
     }
-
 }

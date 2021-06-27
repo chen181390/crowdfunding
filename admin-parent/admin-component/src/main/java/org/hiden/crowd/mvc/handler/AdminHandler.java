@@ -5,6 +5,7 @@ import org.hiden.crowd.constant.CrowdConstant;
 import org.hiden.crowd.entity.Admin;
 import org.hiden.crowd.service.api.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class AdminHandler {
         return "redirect:/admin/to/login/page.html";
     }
 
+    @PreAuthorize("hasRole('经理') or hasAuthority('user:get')")
     @RequestMapping("/get/page.html")
     public String getPageInfo(@RequestParam(value = "keyword", defaultValue = "") String keyword, @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                               @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize, ModelMap modelMap) {
@@ -47,6 +49,7 @@ public class AdminHandler {
         return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
     }
 
+    @PreAuthorize("hasAnyAuthority('user:save')")
     @RequestMapping("/save.html")
     public String save(Admin admin) {
         adminService.add(admin);

@@ -164,6 +164,7 @@
                    console.log(response);
                 }
             });
+            $("#assignAuthModal").modal("hide");
         });
     });
 </script>

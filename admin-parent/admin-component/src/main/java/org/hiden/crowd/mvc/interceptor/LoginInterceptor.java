@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 package org.hiden.crowd.mvc.interceptor;
 
 import org.hiden.crowd.constant.CrowdConstant;
