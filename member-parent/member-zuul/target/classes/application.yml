@@ -13,4 +13,14 @@ zuul:
   sensitive-headers: "*"
 spring:
   application:
-    name:
+    name: hiden-crowd-zuul
+ribbon:
+  ConnectTimeout: 10000 # 连接超时时间(ms)
+  ReadTimeout: 10000 # 通信超时时间(ms)
+hystrix:
+  command:
+    default:
+    execution:
+    isolation:
+    thread:
+    timeoutInMilliseconds: 60000

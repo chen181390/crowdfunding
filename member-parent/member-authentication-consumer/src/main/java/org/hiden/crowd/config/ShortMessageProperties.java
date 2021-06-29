@@ -14,4 +14,5 @@ import org.springframework.stereotype.Component;
 public class ShortMessageProperties {
     private String appcode;
     private String templateId;
+    private String host;
 }

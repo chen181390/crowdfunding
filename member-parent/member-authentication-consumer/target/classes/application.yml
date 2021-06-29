@@ -12,5 +12,10 @@ eureka:
       defaultZone: http://localhost:1000/eureka
 short:
   message:
+    host: https://gyytz.market.alicloudapi.com
     appcode: 80863550ab464689b398ecf2dcff06c0
-    templateId: M09DD535F4
+    templateId: a09602b817fd47e59e7c6e603d3f088d
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000

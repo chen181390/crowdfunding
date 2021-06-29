@@ -6,6 +6,7 @@ import org.hiden.crowd.mapper.MemberPOMapper;
 import org.hiden.crowd.service.api.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
@@ -21,5 +22,19 @@ public class MemberServiceImpl implements MemberService {
         MemberPOExample.Criteria criteria = memberPOExample.createCriteria();
         criteria.andLoginacctEqualTo(loginacct);
         return memberPOMapper.selectByExample(memberPOExample).get(0);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Override
+    public void saveMember(MemberPO memberPO) {
+        memberPOMapper.insertSelective(memberPO);
+    }
+
+    @Override
+    public Boolean judgeLoginacctExist(String loginacct) {
+        MemberPOExample memberPOExample = new MemberPOExample();
+        MemberPOExample.Criteria criteria = memberPOExample.createCriteria();
+        criteria.andLoginacctEqualTo(loginacct);
+        return memberPOMapper.countByExample(memberPOExample) > 0;
     }
 }

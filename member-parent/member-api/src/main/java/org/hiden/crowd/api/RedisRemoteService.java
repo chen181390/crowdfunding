@@ -1,4 +1,4 @@
-package org.example.crowd.api;
+package org.hiden.crowd.api;
 
 import org.hiden.crowd.util.ResultEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -25,4 +25,5 @@ public interface RedisRemoteService {
 
     @RequestMapping("/remove/redis/key/remote")
     ResultEntity<String> removeRedisKeyRemote(@RequestParam("key") String key);
+
 }

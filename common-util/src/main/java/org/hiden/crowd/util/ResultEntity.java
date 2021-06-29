@@ -7,6 +7,9 @@ public class ResultEntity<T> {
     private String message;
     private T data;
 
+    public ResultEntity() {
+    }
+
     public ResultEntity(String result, String message, T data) {
         this.result = result;
         this.message = message;
@@ -48,4 +51,6 @@ public class ResultEntity<T> {
     public static <E> ResultEntity<E> failed(String message) {
         return new ResultEntity<E>(FAILED, message, null);
     }
+
+
 }

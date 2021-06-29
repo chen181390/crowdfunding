@@ -13,4 +13,7 @@ zuul:
   sensitive-headers: "*"
 spring:
   application:
-    name:
+    name: hiden-crowd-zuul
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000

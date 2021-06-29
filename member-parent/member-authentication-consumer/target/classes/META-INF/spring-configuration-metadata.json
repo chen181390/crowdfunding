@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "short.message",
+      "type": "org.hiden.crowd.config.ShortMessageProperties",
+      "sourceType": "org.hiden.crowd.config.ShortMessageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "short.message.appcode",
+      "type": "java.lang.String",
+      "sourceType": "org.hiden.crowd.config.ShortMessageProperties"
+    },
+    {
+      "name": "short.message.host",
+      "type": "java.lang.String",
+      "sourceType": "org.hiden.crowd.config.ShortMessageProperties"
+    },
+    {
+      "name": "short.message.template-id",
+      "type": "java.lang.String",
+      "sourceType": "org.hiden.crowd.config.ShortMessageProperties"
+    }
+  ],
+  "hints": []
+}

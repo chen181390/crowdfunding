@@ -11,6 +11,5 @@ public class CrowdWebMvcConfig implements WebMvcConfigurer {
         String urlPath = "/auth/member/to/reg/page.html";
         String viewName = "member-reg";
         registry.addViewController(urlPath).setViewName(viewName);
-
     }
 }

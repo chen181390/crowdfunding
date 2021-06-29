@@ -4,16 +4,17 @@ package org.hiden.crowd.util;
 import com.aliyun.api.gateway.demo.util.HttpUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.util.EntityUtils;
 import org.hiden.crowd.constant.CrowdConstant;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
 public class CrowdUtil {
     public static boolean judgeRequestType(HttpServletRequest request) {
@@ -41,18 +42,29 @@ public class CrowdUtil {
         return null;
     }
 
-    public static ResultEntity<String> sendCodeByShortMessage(String phoneNum, String appcode, String templateId) {
-        String host = "https://smssend.shumaidata.com";
-        String path = "/sms/send";
+    public static ResultEntity<String> sendCodeByShortMessageTest(String host, String phoneNum, String appcode, String templateId) {
+        try {
+            Thread.sleep(500);
+            String code = Integer.toString((int) (Math.random() * 1000000));
+            return ResultEntity.successWithData(code);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return ResultEntity.failed(e.getMessage());
+        }
+    }
+
+    public static ResultEntity<String> sendCodeByShortMessage(String host, String phoneNum, String appcode, String templateId) {
+        String code = Integer.toString((int) (Math.random() * 1000000));
+
+        String path = "/sms/smsSend";
         String method = "POST";
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
-        querys.put("receive", phoneNum);
-        String tag = Integer.toString((int)(Math.random() * 1000000));
-        querys.put("tag", tag);
-//        querys.put("templateId", "M09DD535F4");
+        querys.put("mobile", phoneNum);
+        querys.put("param", "**code**:" + code + ",**minute**:5");
+        querys.put("smsSignId", "2e65b1bb3d054466b82f0c9d125465e2");
         querys.put("templateId", templateId);
         Map<String, String> bodys = new HashMap<String, String>();
 
@@ -72,7 +84,7 @@ public class CrowdUtil {
             int statusCode = statusLine.getStatusCode();
             String reasonPhrase = statusLine.getReasonPhrase();
             if (statusCode == 200) {
-                return ResultEntity.successWithoutData();
+                return ResultEntity.successWithData(code);
             }
             return ResultEntity.failed(reasonPhrase);
         } catch (Exception e) {
@@ -80,4 +92,17 @@ public class CrowdUtil {
             return ResultEntity.failed(e.getMessage());
         }
     }
+
+    public static boolean checkObjPropsNotNull(Object obj) throws IllegalAccessException {
+        Class clazz = obj.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for(Field field : fields) {
+            field.setAccessible(true);
+            if (field.get(obj) == null) return false;
+            field.setAccessible(false);
+        }
+        return true;
+    }
+
+
 }
